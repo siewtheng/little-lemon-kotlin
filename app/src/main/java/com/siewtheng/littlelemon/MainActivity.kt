@@ -1,11 +1,11 @@
-package com.example.littlelemon
+package com.siewtheng.littlelemon
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Surface
-import com.example.littlelemon.composables.OnboardingScreen
-import com.example.littlelemon.ui.theme.LittleLemonTheme
+import com.siewtheng.littlelemon.composables.OnboardingScreen
+import com.siewtheng.littlelemon.ui.theme.LittleLemonTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

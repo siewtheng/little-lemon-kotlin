@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.littlelemon"
+    namespace = "com.siewtheng.littlelemon"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.littlelemon"
+        applicationId = "com.siewtheng.littlelemon"
         minSdk = 21
         targetSdk = 34
         versionCode = 1
