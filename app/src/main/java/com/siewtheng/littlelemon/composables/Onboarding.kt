@@ -1,6 +1,6 @@
-package com.example.littlelemon.composables
+package com.siewtheng.littlelemon.composables
 
-import com.example.littlelemon.R
+import com.siewtheng.littlelemon.R
 import androidx.compose.runtime.Composable
 import android.os.Bundle
 import androidx.activity.ComponentActivity

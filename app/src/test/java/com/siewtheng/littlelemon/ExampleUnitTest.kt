@@ -1,4 +1,4 @@
-package com.example.littlelemon
+package com.siewtheng.littlelemon
 
 import org.junit.Test
 
