@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Surface
-import com.siewtheng.littlelemon.composables.OnboardingScreen
+import com.siewtheng.littlelemon.composables.Navigation
 import com.siewtheng.littlelemon.ui.theme.LittleLemonTheme
 
 class MainActivity : ComponentActivity() {
@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
             LittleLemonTheme {
                 // A surface container using the 'background' color from the theme
                 Surface {
-                    OnboardingScreen()
+                    Navigation()
                 }
             }
         }
