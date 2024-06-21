@@ -36,7 +36,7 @@ class Onboarding : ComponentActivity()  {
                             OnboardingScreen(navController)
                         }
                         composable("home") {
-                            HomeScreen()
+                            HomeScreen(navController)
                         }
                     }
                 }

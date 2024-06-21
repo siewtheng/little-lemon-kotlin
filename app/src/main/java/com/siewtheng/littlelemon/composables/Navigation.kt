@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.platform.LocalContext
 
+
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
@@ -19,10 +20,10 @@ fun Navigation() {
             OnboardingScreen(navController)
         }
         composable(HomeDestination.route) {
-            HomeScreen()
+            HomeScreen(navController)
         }
         composable(ProfileDestination.route) {
-            ProfileScreen()
+            Profile(navController)
         }
     }
 
