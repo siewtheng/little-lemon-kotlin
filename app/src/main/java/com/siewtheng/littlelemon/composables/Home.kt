@@ -42,9 +42,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.sp
+import com.siewtheng.littlelemon.ui.theme.highlightBlack
+import com.siewtheng.littlelemon.ui.theme.highlightWhite
+import com.siewtheng.littlelemon.ui.theme.primaryGreen
+import com.siewtheng.littlelemon.ui.theme.primaryYellow
+import com.siewtheng.littlelemon.ui.theme.secondaryOrange
 
 
 class Home : ComponentActivity(){
@@ -87,7 +94,9 @@ fun HomeScreen(navController: NavHostController) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            ,
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -95,14 +104,14 @@ fun HomeScreen(navController: NavHostController) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Logo",
                 modifier = Modifier
                     .align(Alignment.Center)
-                    .height(50.dp)
+                    .height(40.dp)
                     .fillMaxWidth()
             )
 
@@ -112,45 +121,36 @@ fun HomeScreen(navController: NavHostController) {
                 contentDescription = "Profile",
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .size(30.dp)
+                    .size(40.dp)
                     .clip(CircleShape)
                     .border(1.dp, Color.Gray, CircleShape)
                     .clickable {
                         navController.navigate(ProfileDestination.route)
-                    },
-                contentScale = ContentScale.Crop
+                    }
             )
         }
 
 
-        Spacer(modifier = Modifier.height(5.dp))
+        Spacer(modifier = Modifier.height(2.dp))
 
-        HeroSection(searchQuery) {
-            filterBySearchQuery(searchQuery.value, menuItems, filteredMenuItems)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(primaryGreen)
+        ) {
+            HeroSection(searchQuery) {
+                filterBySearchQuery(searchQuery.value, menuItems, filteredMenuItems)
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        
-        Text(text = "Order For Delivery")
-
-        /*if (menuItems.isNotEmpty()) {
-            MenuItems(menuItems)
-        }
-
-        val filteredMenuItems = if (searchQuery.value.isNotBlank()) {
-            menuItems.filter { menuItem ->
-                menuItem.title.contains(searchQuery.value, ignoreCase = true)
-            }
-        } else {
-            menuItems
-        }
-
-        if (filteredMenuItems.isNotEmpty()) {
-            MenuItems(filteredMenuItems)
-        } else {
-            Text("No items found", modifier = Modifier.padding(16.dp))
-        }*/
+        Text(text = "Order For Delivery",
+            style = MaterialTheme.typography.displayMedium.copy(
+                color = highlightBlack,
+                fontSize = 24.sp
+            )
+            )
+        Spacer(modifier = Modifier.height(8.dp))
 
         MenuBreakdown(categories, selectedCategory.value, filteredMenuItems.value) { category ->
             selectedCategory.value = category
@@ -167,7 +167,7 @@ fun HomeScreen(navController: NavHostController) {
 
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun HeroSection(searchQuery: MutableState<String>, onSearch: () -> Unit) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -175,37 +175,43 @@ fun HeroSection(searchQuery: MutableState<String>, onSearch: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp)
     ) {
 
         Text(
             text = "Little Lemon",
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.displayLarge.copy(
+                color = secondaryOrange
+            )
         )
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column(
                 modifier = Modifier.weight(1f)
             ) {
+
+
                 Text(
                     text = "Japan",
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(vertical = 2.dp)
+                    style = MaterialTheme.typography.displayMedium.copy(
+                        color = primaryYellow
+                    ),
+                    modifier = Modifier.padding(bottom = 0.dp)
                 )
 
                 Text(
-                    text = "We are a family-owned Japanese restaurant, focused on traditional recipes served with a modern twist",
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(vertical = 2.dp)
+                    text = "We are a family-owned Japanese restaurant, focused on traditional recipes served with a modern twist.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(bottom = 2.dp)
                 )
 
             }
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(8.dp))
 
             Image(
                 painter = painterResource(id = R.drawable.hero),
@@ -219,7 +225,7 @@ fun HeroSection(searchQuery: MutableState<String>, onSearch: () -> Unit) {
 
     }
 
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(8.dp))
 
     // Search Bar
     OutlinedTextField(
@@ -227,7 +233,8 @@ fun HeroSection(searchQuery: MutableState<String>, onSearch: () -> Unit) {
         onValueChange = { searchQuery.value = it },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .padding(bottom = 14.dp),
         placeholder = { Text("Enter Search Phrase") },
         leadingIcon = {
             Icon(
@@ -235,6 +242,13 @@ fun HeroSection(searchQuery: MutableState<String>, onSearch: () -> Unit) {
                 contentDescription = "Search Icon"
             )
         },
+        colors = TextFieldDefaults.textFieldColors(
+            cursorColor = primaryGreen,
+            focusedLabelColor = primaryGreen,
+            unfocusedLabelColor = primaryGreen,
+            focusedIndicatorColor = primaryGreen,
+            unfocusedIndicatorColor = primaryGreen
+        ),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Search
@@ -282,11 +296,18 @@ fun MenuItem(menuItem: MenuItemEntity) {
                 .padding(8.dp)
                 .weight(1f)
         ) {
-            Text(text = menuItem.title, style = MaterialTheme.typography.titleMedium)
+            Text(text = menuItem.title, style = MaterialTheme.typography.headlineSmall.copy(
+                color = primaryGreen,
+
+            ))
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = menuItem.description, style = MaterialTheme.typography.bodyMedium)
+            Text(text = menuItem.description, style = MaterialTheme.typography.bodyMedium.copy(
+                color = highlightBlack
+            ))
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "$${menuItem.price}", style = MaterialTheme.typography.bodyMedium)
+            Text(text = "$${menuItem.price}", style = MaterialTheme.typography.bodyMedium.copy(
+                color = highlightBlack
+            ))
             Spacer(modifier = Modifier.height(4.dp))
 
         }
@@ -334,14 +355,17 @@ fun CategoryButton(category: String, isSelected: Boolean, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .padding(start = 8.dp)
-            .background(if (isSelected) Color.Blue else Color.LightGray)
+            .background(if (isSelected) primaryGreen else highlightWhite)
+            .clip(RoundedCornerShape(8.dp))
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Text(
             text = category,
-            color = if (isSelected) Color.White else Color.Black,
-            style = MaterialTheme.typography.titleMedium
+            color = if (isSelected) highlightWhite else highlightBlack,
+            style = MaterialTheme.typography.headlineSmall.copy(
+                fontSize = 16.sp
+            )
         )
     }
 }
