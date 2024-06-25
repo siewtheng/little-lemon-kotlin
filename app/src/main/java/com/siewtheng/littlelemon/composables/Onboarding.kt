@@ -22,7 +22,19 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.composable
 import androidx.compose.ui.platform.LocalContext
 import android.content.Context
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
+import com.siewtheng.littlelemon.ui.theme.*
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+
 
 class Onboarding : ComponentActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,14 +73,21 @@ fun OnboardingScreen(navController: NavHostController) {
     ) {
         Header()
         Text(
-            text = "Welcome to Little Lemon Restaurant!",
+            text = "Welcome to Little Lemon Restaurant !!!",
             modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
-            style = MaterialTheme.typography.bodyLarge
+            style = MaterialTheme.typography.displayMedium.copy(
+                color = secondaryOrange,
+                fontStyle = FontStyle.Italic,
+                fontSize = 20.sp
+            ),
+            textAlign = TextAlign.Center
         )
         Image(
             painter = painterResource(R.drawable.restaurant),
             contentDescription = "Restaurant Picture",
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20.dp))
         )
         UserInputForm(firstName, lastName, email)
         RegisterButton(firstName, lastName, email, registrationMessage, context, navController)
@@ -87,36 +106,96 @@ fun Header() {
     Image(
         painter = painterResource(R.drawable.logo),
         contentDescription = "App Logo",
-        modifier = Modifier.fillMaxWidth().height(50.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun UserInputForm(firstName: MutableState<String>, lastName: MutableState<String>, email: MutableState<String>) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Column(modifier = Modifier.padding(16.dp)) {
-        Text("First Name", modifier = Modifier.padding(bottom = 1.dp))
-        OutlinedTextField(
+        TextField(
             value = firstName.value,
             onValueChange = { firstName.value = it },
             label = { Text("First Name") },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = TextFieldDefaults.textFieldColors(
+                cursorColor = primaryGreen,
+                focusedLabelColor = primaryGreen,
+                unfocusedLabelColor = primaryGreen,
+                focusedIndicatorColor = primaryGreen,
+                unfocusedIndicatorColor = primaryGreen
+            ),
+            textStyle = MaterialTheme.typography.bodyLarge.copy(
+                color = primaryGreen
+            ),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = {
+                keyboardController?.hide()
+            }),
+            visualTransformation = VisualTransformation.None,
+            singleLine = true
         )
-        Text("Last Name", modifier = Modifier.padding(top = 2.dp, bottom = 1.dp))
-        OutlinedTextField(
+        Spacer(modifier = Modifier.height(4.dp))
+        TextField(
             value = lastName.value,
             onValueChange = { lastName.value = it },
             label = { Text("Last Name") },
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            colors = TextFieldDefaults.textFieldColors(
+                cursorColor = primaryGreen,
+                focusedLabelColor = primaryGreen,
+                unfocusedLabelColor = primaryGreen,
+                focusedIndicatorColor = primaryGreen,
+                unfocusedIndicatorColor = primaryGreen
+            ),
+            textStyle = MaterialTheme.typography.bodyLarge.copy(
+                color = primaryGreen
+            ),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = {
+                keyboardController?.hide()
+            }),
+            visualTransformation = VisualTransformation.None,
+            singleLine = true
         )
-        Text("Email Address", modifier = Modifier.padding(top = 2.dp, bottom = 1.dp))
-        OutlinedTextField(
+        Spacer(modifier = Modifier.height(4.dp))
+        TextField(
             value = email.value,
             onValueChange = { email.value = it },
             label = { Text("Email Address") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            colors = TextFieldDefaults.textFieldColors(
+                cursorColor = primaryGreen,
+                focusedLabelColor = primaryGreen,
+                unfocusedLabelColor = primaryGreen,
+                focusedIndicatorColor = primaryGreen,
+                unfocusedIndicatorColor = primaryGreen
+            ),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(onDone = {
+                keyboardController?.hide()
+            }),
+            visualTransformation = VisualTransformation.None,
+            singleLine = true,
+            textStyle = MaterialTheme.typography.bodyLarge.copy(
+                color = primaryGreen
+            )
         )
     }
 }
@@ -133,9 +212,14 @@ fun RegisterButton(firstName: MutableState<String>, lastName: MutableState<Strin
                 navController.navigate("home")
             }
         },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = primaryGreen,
+            contentColor = highlightWhite
+        ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp)
+            .padding(16.dp),
+
     ) {
         Text("Register")
     }
